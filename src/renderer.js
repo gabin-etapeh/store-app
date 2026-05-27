@@ -1,33 +1,17 @@
-/**
- * This file will automatically be loaded by vite and run in the "renderer" context.
- * To learn more about the differences between the "main" and the "renderer" context in
- * Electron, visit:
- *
- * https://electronjs.org/docs/tutorial/process-model
- *
- * By default, Node.js integration in this file is disabled. When enabling Node.js integration
- * in a renderer process, please be aware of potential security implications. You can read
- * more about security risks here:
- *
- * https://electronjs.org/docs/tutorial/security
- *
- * To enable Node.js integration in this file, open up `main.js` and enable the `nodeIntegration`
- * flag:
- *
- * ```
- *  // Create the browser window.
- *  mainWindow = new BrowserWindow({
- *    width: 800,
- *    height: 600,
- *    webPreferences: {
- *      nodeIntegration: true
- *    }
- *  });
- * ```
- */
+const formEl = document.querySelector('#add-form');
+const inputEl = document.querySelector('#note-text');
 
-import './index.css';
+formEl?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const text = inputEl?.value ?? '';
 
-console.log(
-  '👋 This message is being logged by "renderer.js", included via Vite',
-);
+  try {
+    setStatus('Saving…');
+    await window.db.addNote(text);
+    if (inputEl) inputEl.value = '';
+    await refresh();
+    setStatus('');
+  } catch (err) {
+    setStatus(err?.message ?? String(err));
+  }
+});
