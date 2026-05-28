@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import { register } from 'node:module';
+import { addNote, closeDb, deleteNote, initDb, listNotes } from './db.js'; 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -90,9 +91,9 @@ app.whenReady().then(() => {
 
 
 // Si database.js exporte initDb
-const { initDb } = require('./db.js'); 
+//const { initDb } = require('./db.js'); 
 // ou avec ES Modules :
-// import { initDb } from './database.js';
+ //import { initDb } from './database.js';
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
